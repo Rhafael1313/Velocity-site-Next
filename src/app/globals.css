@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+item-hamburguer {
+    @apply block w-8 h-1 bg-gray-600 transition ease-in
+}
+
+.remove-select {
+  -webkit-user-select:none;  
+  -moz-user-select:none;     
+  -ms-user-select:none;      
+  user-select:none;  
+}

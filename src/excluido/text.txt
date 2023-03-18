@@ -1,0 +1,81 @@
+export function ClientSlide({ src }: IClientSlide) {
+	const window = useContext(ClientSliderContext);
+	const [currentSlide, setCurrentSlide] = useState(0);
+	const [loaded, setLoaded] = useState(false);
+	const [sliderRef, instanceRef] = useKeenSlider({
+		loop: true,
+		initial: 0,
+		slides: {
+			perView: 1,
+		},
+		slideChanged(slider) {
+			setCurrentSlide(slider.track.details.rel);
+		},
+		created() {
+			setLoaded(true);
+		}
+	},
+		[
+			(slider) => {
+				let timeout: nodeIterval;
+				let mouseOver = false;
+
+				function clearNextTimeout() {
+					clearTimeout(timeout);
+				}
+
+				function nextTimeout() {
+					clearTimeout(timeout);
+					if (mouseOver) return
+					timeout = setTimeout(() => {
+						slider.next()
+					}, 2000);
+				}
+
+				slider.on('created', () => {
+					slider.container.addEventListener("mouseover", () => {
+						mouseOver = true
+						clearNextTimeout()
+					})
+					slider.container.addEventListener("mouseout", () => {
+						mouseOver = false
+						nextTimeout()
+					})
+					nextTimeout()
+				});
+
+				slider.on("dragStarted", clearNextTimeout)
+				slider.on("animationEnded", nextTimeout)
+				slider.on("updated", nextTimeout)
+			}
+		]
+	);
+
+	return (
+		<div className={`w-full h-full flex justify-center items-center relative`}>
+			<ol ref={sliderRef} className="keen-slider w-full h-full">
+				{
+					src.map(({element, id}) =>
+						<li key={id} className='keen-slider__slide'>
+							{element}
+						</li>
+					)
+				}
+			</ol>
+			<Arrow directons='left' onClick={() => { instanceRef.current?.prev() }} className='w-14 h-auto text-5xl absolute left-5 text-white hidden lg:block' />
+			<Arrow directons='right' onClick={() => { instanceRef.current?.next() }} className='w-14 h-auto text-5xl absolute right-5 text-white hidden lg:flex items-end justify-end' />
+			<div className='absolute hidden lg:flex flex-row justify-center items-center gap-3 h-14 bottom-0 ml-auto mr-auto'>
+				{
+					[...Array(instanceRef.current?.track.details.slidesLength).keys()].map((idx: number) =>
+						<button
+							key={idx}
+							onClick={() => {
+								instanceRef.current?.moveToIdx(idx)
+							}}
+							className={`w-3 h-3 rounded-full ${currentSlide === idx ? 'bg-black opacity-100' : 'bg-gray-400 opacity-60'}`}
+						></button>)
+				}
+			</div>
+		</div>
+	);
+}
