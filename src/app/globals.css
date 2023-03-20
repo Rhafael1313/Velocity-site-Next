@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-item-hamburguer {
+.item-hamburguer {
     @apply block w-8 h-1 bg-gray-600 transition ease-in
 }
 

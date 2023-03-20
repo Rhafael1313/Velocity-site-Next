@@ -20,7 +20,7 @@ export default async function Home() {
         <Info listOfAtribute={atributos} />
         <About whatsAppUrl={whatsApp.linkDoElmento} />
         <Promotion listOfPlans={planos} />
-        <Tv />
+        <Tv listPlanTV={planoDeTvs} />
       </ClientReponseSlider>
     </>
   );

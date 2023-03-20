@@ -1,8 +1,8 @@
 'use client';
 
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper';
+import { Pagination, Autoplay } from 'swiper';
 import { ClientSliderContext } from "@/components/ClientSliderContext";
 
 import 'swiper/swiper.min.css';
@@ -20,21 +20,26 @@ interface IClientSlide {
 }
 
 export function ClientSlide({ desktop, mobile }: IClientSlide) {
-	const [ slides, setSlides ] = useState<ISlides[]>(mobile);
 	const { isActiveResponse } = useContext(ClientSliderContext);
 
-	isActiveResponse ? setSlides(desktop) : setSlides(mobile);
+	const slides = isActiveResponse ? desktop : mobile;
 
 	return (
-		<div className='`w-full h-full flex justify-center items-center relative'>
+		<div className='aqui w-full h-full flex justify-center items-center relative'>
 			<Swiper
 				className='w-full h-full z-0'
 				slidesPerView={1}
 				loop={true}
+				autoplay={
+					{
+						delay: 500,
+						disableOnInteraction: false,
+					}
+				}
 				pagination={{
 					clickable: true,
 				}}
-				modules={[Pagination]}>
+				modules={[Pagination, Autoplay]}>
 					{
 						slides.map(({ elements, id }) => 
 							<SwiperSlide key={id} className='w-full h-full'>

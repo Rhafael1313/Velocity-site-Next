@@ -27,7 +27,11 @@ export function Slide({ desktop, mobile }: ISlide) {
     const listSlideMobile = mobile.map(({ url }) => 
         ({
             id: uuidv4(),
-            elements: <img
+            elements: <Imagem
+            blurDataURL={url}
+            placeholder='blur'
+            width={1980}
+            height={720}
             className='object-cover w-full h-full'
             src={url}
             alt="Promoção do dia" />
