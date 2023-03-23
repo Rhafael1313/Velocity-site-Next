@@ -32,7 +32,7 @@ export function ClientSlide({ desktop, mobile }: IClientSlide) {
 				loop={true}
 				autoplay={
 					{
-						delay: 500,
+						delay: 2000,
 						disableOnInteraction: false,
 					}
 				}

@@ -3,11 +3,11 @@
 import { ReactNode, useEffect, useState } from "react";
 import { ClientSliderContext } from '@/components/ClientSliderContext';
 
-interface IMediaQuery {
-    children?: ReactNode[];
+interface IClientReponseSlider {
+    children?: ReactNode;
 }
 
-export function ClientReponseSlider({ children }: IMediaQuery) {
+export function ClientReponseSlider({ children }: IClientReponseSlider) {
     const [isActiveResponse, setIsActiveResponse] = useState<boolean>(false);
 
     useEffect(() => {

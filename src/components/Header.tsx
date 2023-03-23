@@ -18,7 +18,7 @@ export function Header({
     const [ active, setActive ] = useState(false);
 
     return (
-        <header className="w-full border-b-2 bg-white z-50 border-gray-100 flex flex-col items-center justify-between fixed">
+        <header className="w-full border-b-2 bg-white z-40 border-gray-100 flex flex-col items-center justify-between fixed">
             <div className='w-full h-[50px] hidden xl:flex justify-center items-center' style={{ backgroundColor: corDoHeader.hex }}>
                 <InfoBar endereco={endereco} facebook={facebook} instagram={instagram} whatsApp={whatsApp} />
             </div>

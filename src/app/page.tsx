@@ -6,6 +6,7 @@ import { Promotion } from "@/components/Promotion";
 import { Slide } from "@/components/Slide";
 import { Tv } from '@/components/Tv';
 import { getHome } from "@/lib/http";
+import { Modal } from "@/components/Modal";
 
 export default async function Home() {
   const home = await getHome();
@@ -15,12 +16,14 @@ export default async function Home() {
   return (
     <>
       <ClientReponseSlider>
-        <Slide desktop={imagensDoCarrosel} mobile={imagemCarroselMobile} />
-        <Plans listPlans={planos} whastApp={whatsApp} />
-        <Info listOfAtribute={atributos} />
-        <About whatsAppUrl={whatsApp.linkDoElmento} />
-        <Promotion listOfPlans={planos} />
-        <Tv listPlanTV={planoDeTvs} />
+        <Modal>
+          <Slide desktop={imagensDoCarrosel} mobile={imagemCarroselMobile} />
+          <Plans listPlans={planos} whastApp={whatsApp} />
+          <Info listOfAtribute={atributos} />
+          <About whatsAppUrl={whatsApp.linkDoElmento} />
+          <Promotion listOfPlans={planos} />
+          <Tv listPlanTV={planoDeTvs} />
+        </Modal>
       </ClientReponseSlider>
     </>
   );

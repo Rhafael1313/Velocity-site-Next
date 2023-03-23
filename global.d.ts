@@ -106,3 +106,10 @@ interface IMediaQueryChild {
 //-----------------------------------------------------------------------
 
 type nodeIterval = string | number | NodeJS.Timeout | undefined;
+
+//-----------------------------------------------------------------------
+
+interface IModelContext {
+    setIsOpen?: Dispatch<SetStateAction<boolean | undefined>>;
+    setComponent?: Dispatch<SetStateAction<ReactNode>>;
+}

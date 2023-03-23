@@ -3,26 +3,55 @@
 import { REAL } from "@/helper/utils";
 import { IPlanosHome } from "global";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext } from "react";
+import { ModalCardPrice } from "./ModalCardPrice";
+import { ModalContext } from "./ModalContext";
 
 interface ICardPrice {
     linkWhats: string;
     card: IPlanosHome;
 }
 
+interface ILink {
+    url: string;
+}
+
+const AssineAgora = ({ url }: ILink) =>
+    <Link href={url} className="w-full h-10 text-white font-bold rounded-lg bg-velocityBlue-500 flex justify-center items-center">
+        ASSINE AGORA
+    </Link>
+
+const WhatsApp = ({ url }: ILink) =>
+    <Link href={url} target='_blank' className="w-full h-10 text-white font-bold rounded-lg bg-velocityWhatsApp-500 flex justify-center items-center">
+        WHATSAPP
+    </Link>
+
 export function CardPrice({ card, linkWhats }: ICardPrice) {
+    const { setComponent, setIsOpen } = useContext(ModalContext);
     const { cor1, cor2, degrade, informacoesImportantes, listaDeObservacoesDoPlano, nomeDoPlano, preco, privilegios, quantosMegas } = card;
     const valor = REAL.format(preco);
     const matchValor = valor.match(/(\w+)(,\w+)/);
 
+    const openModal = () => {
+        setIsOpen(true);
+        setComponent(<ModalCardPrice
+            nomeDoPlano={nomeDoPlano}
+            quantosMegas={quantosMegas}
+            listaDeObservacoesDoPlano={listaDeObservacoesDoPlano}
+            informacoesImportantes={informacoesImportantes}
+            AssineAgora={<AssineAgora url='/#' />}
+            WhatsApp={<WhatsApp url={linkWhats} />} />
+        );
+    }
+
     return (
         <div className="w-full h-full overflow-hidden flex flex-col rounded-lg border-[1px] items-center gap-3">
-            <header className='w-full text-white p-5 flex flex-col items-center justify-center gap-3' 
+            <header className='w-full text-white p-5 flex flex-col items-center justify-center gap-3'
                 style={
                     degrade
                         ? { backgroundImage: `linear-gradient(to top, rgba(${cor1.rgba.r}, ${cor1.rgba.g}, ${cor1.rgba.b}, ${cor1.rgba.a}), rgba(${cor2.rgba.r}, ${cor2.rgba.g}, ${cor2.rgba.b}, ${cor2.rgba.a})` }
                         : { backgroundColor: `rgba(${cor1.rgba.r}, ${cor1.rgba.g}, ${cor1.rgba.b}, ${cor1.rgba.a})` }
-                    }>
+                }>
                 <span className="block text-lg font-bold">{nomeDoPlano}</span>
                 <strong className="block text-4xl font-bold">{`${quantosMegas} MEGA`}</strong>
             </header>
@@ -56,15 +85,13 @@ export function CardPrice({ card, linkWhats }: ICardPrice) {
                 </div>
             </div>
             <div className="w-full flex flex-col items-center gap-3 px-4 pb-5">
-                <Link href='/#' className="w-full h-10 text-white font-bold rounded-lg bg-velocityBlue-500 flex justify-center items-center">
-                    ASSINE AGORA
-                </Link>
-                <Link href={linkWhats} target='_blank' className="w-full h-10 text-white font-bold rounded-lg bg-velocityWhatsApp-500 flex justify-center items-center">
-                    WHATSAPP
-                </Link>
-                <Link href='/#' className="w-full h-10 border-2 border-velocityBlue-500 text-velocityBlue-500 font-bold rounded-lg flex justify-center items-center">
+                <AssineAgora url='/#' />
+                <WhatsApp url={linkWhats} />
+                <button
+                    onClick={openModal}
+                    className="w-full h-10 border-2 border-velocityBlue-500 text-velocityBlue-500 font-bold rounded-lg flex justify-center items-center">
                     + DETALHES
-                </Link>
+                </button>
             </div>
         </div>
     );

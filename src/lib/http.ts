@@ -142,6 +142,7 @@ query MyQuery {
     listaDeObservacoesDoPlano {
       nome
       icone
+      id
     }
   }
   planoDeTvs {
